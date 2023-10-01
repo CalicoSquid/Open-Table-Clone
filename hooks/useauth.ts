@@ -6,7 +6,7 @@ import { deleteCookie } from "cookies-next";
 
 export default function useAuth() {
 
-    const {data, error, loading, setAuthState} = useContext(AuthenticationContext)
+    const {data, error, loading, setAuthState, url} = useContext(AuthenticationContext)
 
     const signIn = async (
         {email, password}:
@@ -17,23 +17,26 @@ export default function useAuth() {
             setAuthState({
                 data: null,
                 loading: true,
-                error: null
+                error: null,
+                url
             })
-            const response = await axios.post("http://localhost:3000/api/auth/signin", {
+            const response = await axios.post(`${url}/api/auth/signin`, {
                 email,
                 password
             })
             setAuthState({
                 data: response.data,
                 loading: false,
-                error: null
+                error: null,
+                url
             })
             handleClose()
         } catch (err: any) {
             setAuthState({
                 data: null,
                 loading: false,
-                error: err.response.data.errorMessage
+                error: err.response.data.errorMessage,
+                url
             })
         }
     }
@@ -61,9 +64,10 @@ export default function useAuth() {
                 setAuthState({
                     data: null,
                     loading: true,
-                    error: null
+                    error: null,
+                    url
                 })
-                const response = await axios.post("http://localhost:3000/api/auth/signup", {
+                const response = await axios.post(`${url}/api/auth/signup`, {
                     firstName,
                     lastName,
                     email,
@@ -74,14 +78,16 @@ export default function useAuth() {
                 setAuthState({
                     data: response.data,
                     loading: false,
-                    error: null
+                    error: null,
+                    url
                 })
                 handleClose()
             } catch (err: any) {
                 setAuthState({
                     data: null,
                     loading: false,
-                    error: err.response.data.errorMessage
+                    error: err.response.data.errorMessage,
+                    url
                 })
             }
     }
@@ -92,7 +98,8 @@ export default function useAuth() {
         setAuthState({
             data: null,
             loading: false,
-            error: null
+            error: null,
+            url
         })
     }
 

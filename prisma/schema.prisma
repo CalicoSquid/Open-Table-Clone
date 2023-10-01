@@ -3,6 +3,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model Restaurant {
   id          Int      @id @default(autoincrement())
   name        String
@@ -21,6 +25,8 @@ model Restaurant {
   cuisine     Cuisine  @relation(fields: [cuisine_id], references: [id])
   location    Location @relation(fields: [location_id], references: [id])
   review      Review[]
+  booking     Booking[]
+  tables      Table[]
 }
 
 model Item {
@@ -75,6 +81,43 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   reviews    Review[]
+}
+
+model Booking {
+  id                Int       @id @unique @default(autoincrement())
+  number_of_people  Int
+  booking_time      DateTime
+  booker_email      String
+  booker_phone      String
+  booker_first_name String
+  booker_last_name  String
+  booker_occasion   String
+  booker_requests   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  restaurant_id     Int
+  restaurant        Restaurant @relation(fields: [restaurant_id], references: [id])
+  tables            BookingsOnTables[]
+}
+
+model Table {
+  id                Int        @id @unique @default(autoincrement())
+  seats             Int
+  restaurant_id     Int
+  restaurant        Restaurant @relation(fields: [restaurant_id], references: [id])
+  bookings          BookingsOnTables[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model BookingsOnTables {
+
+  booking_id       Int
+  booking          Booking @relation(fields: [booking_id], references: [id])
+  table_id          Int
+  table            Table @relation(fields: [table_id], references: [id])
+
+  @@id([booking_id, table_id])
 }
 
 enum PRICE {

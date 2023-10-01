@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from 'prisma/prisma/prisma/node_modules/.prisma/client'
+import { PrismaClient } from '@prisma/client'
 import jwt from "jsonwebtoken"
 
 const prisma = new PrismaClient()

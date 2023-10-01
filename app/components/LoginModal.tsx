@@ -34,7 +34,7 @@ export default function LoginModal({isSignIn}: {isSignIn: boolean}) {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const {signIn, signUp} = useAuth()
+  const {signIn, signUp, signOut} = useAuth()
   const {data, loading, error} = useContext(AuthenticationContext)
 
   const renderContent = (signIn: string, signUp: string) => isSignIn ? signIn : signUp

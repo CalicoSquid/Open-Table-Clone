@@ -5,10 +5,13 @@ import { getCookie } from "cookies-next";
 import { User } from "@prisma/client";
 import { useState, createContext, useEffect } from "react"
 
+const url =  process.env.STATUS === "dev" ? "http://localhost:3000" : "http://localhost:3000"
+
 interface State {
     loading: boolean,
     data: User | null,
-    error: string | null
+    error: string | null,
+    url: string
 }
 
 interface AuthState extends State {
@@ -19,7 +22,8 @@ export const AuthenticationContext = createContext<AuthState>({
     loading: false,
     data: null,
     error: null,
-    setAuthState: () => {}
+    setAuthState: () => {},
+    url
 });
 
 
@@ -29,13 +33,15 @@ export default function AuthContext({children}: {children: React.ReactNode;}) {
         loading: true,
         data: null,
         error: null,
+        url,
     })
 
     const fetchUser = async () => {
         setAuthState({
             data: null,
             loading: true,
-            error: null
+            error: null,
+            url,
         })
         try {
             const jwt = getCookie("jwt")
@@ -45,11 +51,12 @@ export default function AuthContext({children}: {children: React.ReactNode;}) {
                 return setAuthState({
                     data: null,
                     loading: false,
-                    error: null
+                    error: null,
+                    url
                 })
             }
 
-            const response = await axios.get("http://localhost:3000/api/auth/me", {
+            const response = await axios.get(`${url}/api/auth/me`, {
                 headers: {
                     Authorization: `Bearer ${jwt}`
                 }
@@ -60,7 +67,8 @@ export default function AuthContext({children}: {children: React.ReactNode;}) {
             setAuthState({
                 data: response.data,
                 loading: false,
-                error: null
+                error: null,
+                url
             })
 
         }catch (err: any) {
@@ -68,7 +76,8 @@ export default function AuthContext({children}: {children: React.ReactNode;}) {
             setAuthState({
                 data: null,
                 loading: false,
-                error: err.response.data.errorMessage
+                error: err.response.data.errorMessage,
+                url
             })
 
         }
