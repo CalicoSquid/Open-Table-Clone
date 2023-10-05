@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function RestaurantCard({restaurant}: {restaurant: any}) {
 
-  const rating = parseFloat(getReviewScore(restaurant.review))
+  const rating = parseFloat(getReviewScore(restaurant.reviews))
 
   const reviewScore = 
     rating  > 4 
@@ -33,7 +33,7 @@ export default function RestaurantCard({restaurant}: {restaurant: any}) {
           <div className="pl-5">
             <h2 className="text-xxxl">{restaurant.name}</h2>
             <div className="flex items-start">
-            <Stars reviews={restaurant.review}/>
+            <Stars reviews={restaurant.reviews}/>
               <p className="ml-2 text-sm">{reviewScore}</p>
             </div>
             <div className="mb-9">

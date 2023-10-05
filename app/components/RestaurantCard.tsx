@@ -7,7 +7,7 @@ import Stars from './Stars'
 
 export default function RestaurantCard({restaurant} : {restaurant: any}) {
 
-  const rating = parseFloat(getReviewScore(restaurant.review))
+  const rating = parseFloat(getReviewScore(restaurant.reviews))
 
   const reviewScore = 
     rating  > 4 
@@ -31,7 +31,7 @@ export default function RestaurantCard({restaurant} : {restaurant: any}) {
       <div className="p-1">
         <h3 className="font-bold text-xxl mb-2">{restaurant.name}</h3>
         <div className="flex items-center">
-            <Stars reviews={restaurant.review}/>
+            <Stars reviews={restaurant.reviews}/>
           <p className="ml-2">{reviewScore}</p>
           
         </div>

@@ -5,7 +5,7 @@ import { getCookie } from "cookies-next";
 import { User } from "@prisma/client";
 import { useState, createContext, useEffect } from "react"
 
-const url =  process.env.STATUS === "dev" ? "http://localhost:3000" : "http://localhost:3000"
+const url =  process.env.STATUS === "dev" ? "http://localhost:3000" : "https://zingy-empanada-6a5fca.netlify.app"
 
 interface State {
     loading: boolean,
