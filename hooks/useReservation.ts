@@ -4,7 +4,7 @@ import axios from "axios";
 const url =
   process.env.STATUS === "dev"
     ? "http://localhost:3000"
-    : "http://localhost:3000";
+    : "https://zingy-empanada-6a5fca.netlify.app";
 
 export default function useReservation() {
   const [loading, setLoading] = useState(false);

@@ -21,7 +21,7 @@ export interface Restaurant {
 
 const prisma = new PrismaClient();
 
-export const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
+const fetchRestaurant = async (slug: string): Promise<Restaurant> => {
   const restaurant = await prisma.restaurant.findUnique({
     where: {
       slug,
