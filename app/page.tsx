@@ -23,7 +23,7 @@ export interface RestaurantCardType {
   slug: string,
 }
 
-const fetchRestaurants = async (): Promise<RestaurantCardType[]> => {
+const fetchRestaurants = async () => {
   const restaurants = await prisma.restaurant.findMany({
     select: {
       id: true,
